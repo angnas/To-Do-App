@@ -2,16 +2,17 @@ import { useEffect, useState } from "react";
 import Auth from "./components/Auth";
 import ListHeader from "./components/ListHeader";
 import ListItem from "./components/ListItem";
-import Modal from "./components/Modal";
-import ProgressBar from "./components/ProgressBar";
-import TickIcon from "./components/TickIcon";
+import { useCookies } from "react-cookie"
+
 
 
 function App() {
-  const userEmail = 'angela@test.com'
+  const [cookies, setCookie, removeCookie] = useCookies(null)
+  const authToken = cookies.AuthToken
+
+  const userEmail = cookies.Email
   const [tasks, setTasks] = useState(null)
 
-const authToken = false
 
   const getData = async () => {
 
@@ -43,6 +44,7 @@ const authToken = false
       {authToken && 
       <>
       <ListHeader listName={'🏝 holiday tick list'} getData={getData}/>
+      <p className="user-email">Welcome back {userEmail}</p>
       {sortedTasks?.map((task) => <ListItem key={task.id} task={task} getData={getData} />)}
       </>}
     </div>

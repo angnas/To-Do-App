@@ -1,13 +1,17 @@
 import { useState } from "react"
+import { useCookies } from "react-cookie"
+
 
 
 function Modal({mode, setShowModal, getData, task}) {
+  const [cookies, setCookie, removeCookie] = useCookies(null)
+
 
   // const mode = "create"
   const editMode = mode === 'edit' ? true : false
 
   const [data, setData] = useState({
-    email: editMode ? task.email :'angela@test.com',
+    email: editMode ? task.email : cookies.Email,
     title: editMode ? task.title : null,
     progress: editMode ? task.progress : 50,
     date: editMode ? task.date : new Date()
@@ -80,6 +84,7 @@ const editData = async (e) => {
 
         <form>
           <input 
+          type="text"
           required
           maxLength={30}
           placeholder=" Your task goes here"

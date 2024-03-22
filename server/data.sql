@@ -13,3 +13,7 @@ CREATE TABLE users (
     email VARCHAR(255) PRIMARY KEY,
     hashed_password VARCHAR(255)
 );
+
+
+INSERT INTO todos (id, email, title, progress, date) 
+VALUES ('0', 'angela@test.com', 'First todo', '10', '18-03-2024');
