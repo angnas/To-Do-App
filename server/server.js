@@ -29,12 +29,12 @@ console.log(req)
 //create a new todo
 
 app.post('/todos', async (req, res) => {
-    const {email, title, progress, date} = req.body
-    console.log(email, title, progress, data)
+    const {user_email, title, progress, date} = req.body
+    console.log(user_email, title, progress, data)
     const id = uuidv4()
     try {
         const newToDo = await pool.query(`INSERT INTO todos(id, email, title, progress, date) VALUES($1, $2, $3, $4, $5)`,
-        [id, email, title, progress, date])
+        [id, user_email, title, progress, date])
         res.json(newToDo)
 
     } catch(err) {
@@ -47,14 +47,14 @@ app.post('/todos', async (req, res) => {
 
 app.put('/todos/:id', async (req, res) => {
     const { id } = req.params
-    const {email, title, progress, date} = req.body
+    const {user_email, title, progress, date} = req.body
 
     console.log(id)
     
     try {
         const editToDo = 
         await pool.query('UPDATE todos SET email = $1, title = $2, progress = $3, date = $4 WHERE id = $5;', 
-        [email, title, progress, date, id])
+        [user_email, title, progress, date, id])
         res.json(editToDo)
 
     } catch(err) {

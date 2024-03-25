@@ -3,8 +3,8 @@ import { useCookies } from "react-cookie"
 
 
 function Auth() {
-  const [cookies, setCookie, removeCookie] = useCookies(null)
-  const [isLogIn, setIsLogin] = useState(true)
+  const [cookies, setCookie] = useCookies(['user'])
+  const [isLogin, setIsLogin] = useState(true)
   const [email, setEmail] = useState(null)
   const [password, setPassword] = useState(null)
   const [confirmPassword, setConfirmPassword] = useState(null)
@@ -20,25 +20,24 @@ const viewLogin = (status) => {
 
 const handleSubmit =async (e, endpoint) => {
   e.preventDefault()
-  if (!isLogIn && password !== confirmPassword) {
+  if (!isLogin && password !== confirmPassword) {
     setError('Make sure passwords match!')
     return
   }
 
-  const endpoint = isLogIn ? "login" : "signup";
-    const formData = {
-      email,
-      password,
-    }; 
 
-    try {
-
+try {
     
 const response = await fetch(`${process.env.REACT_APP_SERVERURL}/${endpoint}`, {
   method: 'POST',
   headers: {'Content-Type' : 'application/json'},
   body: JSON.stringify({email, password})
     })
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
     const data = await response.json()
 
     if (data.detail) {
@@ -46,32 +45,38 @@ const response = await fetch(`${process.env.REACT_APP_SERVERURL}/${endpoint}`, {
     } else {
       setCookie('Email', data.email)
       setCookie('AuthToken', data.token)
-      window.location.relocate();
+      window.location.reload();
     }
 } catch (error) {
-  setError(error.message || 'An error occurred')
-
+  console.error('Error:', error);
+  setError('An error occurred. Please try again later.');
 }
-}
+};
 
 
   return (
     <div className="auth-container">
       <div className="auth-container-box">
         <form>
-          <h2>{isLogIn ? 'Log In' : 'Sign Up'}</h2>
+          <h2>{isLogin ? 'login' : 'signup'}</h2>
           <input type="email" 
+          id="email"
+          name="email"
           placeholder="email" 
           onChange={(e) => setEmail(e.target.value)}/>
           <input type="password" 
+          id="password"
+          name="password"
           placeholder="password"
           onChange={(e) => setPassword(e.target.value)}/>
-          {!isLogIn && <input 
-          type="password" 
+          {!isLogin && <input 
+          type="text"
+          id="password-check"
+          name="password-check" 
           placeholder="confirm password"
           onChange={(e) => setConfirmPassword(e.target.value)}/>}
-<input type="submit" className="create" onClick={(e) => handleSubmit(e, isLogIn ? 'Login' : 'Sign Up')}/>
-{error && <p>{error}</p>}
+          <input type="submit" className="create" onClick={(e) => handleSubmit(e, isLogin ? 'login' : 'signup')}/>
+          {error && <p>{error}</p>}
         </form>
         <div className="auth-options">
           <button onClick={() => viewLogin(false)}>Sign Up</button>
