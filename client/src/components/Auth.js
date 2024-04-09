@@ -59,24 +59,30 @@ const response = await fetch(`${process.env.REACT_APP_SERVERURL}/${endpoint}`, {
       <div className="auth-container-box">
         <form>
           <h2>{isLogin ? 'login' : 'signup'}</h2>
+
           <input type="email" 
           id="email"
           name="email"
           placeholder="email" 
           onChange={(e) => setEmail(e.target.value)}/>
+
           <input type="password" 
           id="password"
           name="password"
           placeholder="password"
           onChange={(e) => setPassword(e.target.value)}/>
+
           {!isLogin && <input 
           type="text"
           id="password-check"
           name="password-check" 
           placeholder="confirm password"
           onChange={(e) => setConfirmPassword(e.target.value)}/>}
+
           <input type="submit" className="create" onClick={(e) => handleSubmit(e, isLogin ? 'login' : 'signup')}/>
+
           {error && <p>{error}</p>}
+          
         </form>
         <div className="auth-options">
           <button onClick={() => viewLogin(false)}>Sign Up</button>
