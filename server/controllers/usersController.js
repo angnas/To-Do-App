@@ -66,7 +66,7 @@ if (users.rows.length) {
     
     if (success) {
         res.status(200).json({ 'email' : users.rows[0].email, token})
-    }else {
+    } else {
         res.status(400).json({ detail: 'password incorrect'})
     }
         } catch (error) {
