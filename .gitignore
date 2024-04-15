@@ -5,6 +5,7 @@ node_modules
 .env
 /.pnp
 .pnp.js
+.vercel
 
 # testing
 /coverage
