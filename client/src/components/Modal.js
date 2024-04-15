@@ -17,7 +17,7 @@ function Modal({mode, setShowModal, getData, task}) {
     date: editMode ? task.date : new Date()
   })
 
-
+  const authToken = cookies.AuthToken;
 
 // posting a data
 const postData = async (e) => {
@@ -25,11 +25,14 @@ const postData = async (e) => {
   try {
     const response = await fetch(`${process.env.REACT_APP_SERVERURL}/todos`, {
       method: "POST",
-      headers: {'Content-Type' : 'application/json'},
+      headers: {
+        'Content-Type' : 'application/json',
+        authorization: authToken,
+      },
       body: JSON.stringify(data)
     })
-    if (response.status === 200) {
-      console.log('Worked')
+    if (response.status === 201) {
+      console.log('data posted successfully')
       setShowModal(false)
       getData()
     }
@@ -46,11 +49,13 @@ const editData = async (e) => {
   try {
     const response = await fetch(`${process.env.REACT_APP_SERVERURL}/todos/${task.id}`, {
       method: "PUT",
-      headers: {'Content-Type' : 'application/json'},
+      headers: {'Content-Type' : 'application/json',
+      authorization: authToken,
+    },
       body: JSON.stringify(data)
     })
     if (response.status === 200) {
-      console.log('Worked')
+      console.log("data edited successfully")
       setShowModal(false)
       getData()
     }
