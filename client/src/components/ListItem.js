@@ -6,11 +6,17 @@ import Modal from './Modal'
 
 function ListItem({task, getData}) {
   const [showModal, setShowModal] = useState(false)
+  const [cookies, setCookie, removeCookie] = useCookies(null)
+  const authToken = cookies.AuthToken;
 
   const deleteItem = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_SERVERURL}/todos/${task.id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: authToken,
+        },
       })
       if (response.status === 200 ) {
         getData()
