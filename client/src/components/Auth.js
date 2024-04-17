@@ -31,7 +31,7 @@ const handleSubmit =async (e, endpoint) => {
 
 try {
     
-const response = await fetch(`${process.env.REACT_APP_SERVERURL}/${endpoint}`, {
+const response = await fetch(`${process.env.REACT_APP_SERVERURL}/users/${endpoint}`, {
   method: 'POST',
   headers: {'Content-Type' : 'application/json'},
   body: JSON.stringify({email, password})

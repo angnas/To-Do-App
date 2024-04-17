@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useCookies } from 'react-cookie';
 import TickIcon from './TickIcon'
 import ProgressBar from './ProgressBar'
 import Modal from './Modal'
@@ -11,7 +12,7 @@ function ListItem({task, getData}) {
 
   const deleteItem = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_SERVERURL}/todos/${task.id}`, {
+      const response = await fetch(`${process.env.REACT_APP_SERVERURL}/tasks/${task.id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

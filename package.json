@@ -9,6 +9,7 @@
     "client": "cd client && npm start"
   },
   "dependencies": {
-    "if-env": "^1.0.4"
+    "if-env": "^1.0.4",
+    "jwt-js-decode": "^1.8.2"
   }
 }

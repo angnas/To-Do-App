@@ -3,7 +3,7 @@ import Auth from "./Auth";
 import ListHeader from "./ListHeader";
 import ListItem from "./ListItem";
 import { useCookies } from "react-cookie"
-import { jwtDecode } from "jwt-decode";
+// import { jwtDecode } from "jwt-decode";
 
 
 
@@ -13,11 +13,11 @@ function Home() {
   const userEmail = cookies.Email
   const [tasks, setTasks] = useState(null)
 
-  const isTokenExpired = (token) => {
-    const decodedToken = jwtDecode(token);
-    const currentTime = Date.now() / 1000;
-    return decodedToken.exp < currentTime;
-  };
+//   const isTokenExpired = (token) => {
+//     const decodedToken = jwtDecode(token);
+//     const currentTime = Date.now() / 1000;
+//     return decodedToken.exp < currentTime;
+//   };
 
 
   const getData = async () => {
@@ -41,11 +41,11 @@ function Home() {
 
   useEffect(() => {
     if (authToken) {
-        if (isTokenExpired(authToken)) {
-            removeCookie('Email')
-            removeCookie('AuthToken')
-            window.location.reload();
-          }
+        // if (isTokenExpired(authToken)) {
+        //     removeCookie('Email')
+        //     removeCookie('AuthToken')
+        //     window.location.reload();
+        //   }
       getData()
     }
   }
