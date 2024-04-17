@@ -3,15 +3,14 @@ import { useCookies } from "react-cookie"
 
 
 function Auth() {
-  const [cookies, setCookie] = useCookies(['user'])
+  const [cookies, setCookie] = useCookies(['Email', 'AuthToken',])
   const [isLogin, setIsLogin] = useState(true)
-  const [email, setEmail] = useState(null)
-  const [password, setPassword] = useState(null)
-  const [confirmPassword, setConfirmPassword] = useState(null)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   
-  const [error, setError] = useState(null)
+  const [error, setError] = useState(false)
 
-console.log(cookies)
 
 const viewLogin = (status) => {
   setError(null)
@@ -20,9 +19,13 @@ const viewLogin = (status) => {
 
 const handleSubmit =async (e, endpoint) => {
   e.preventDefault()
+  if (!email.trim() || !password.trim()) {
+    setError('Please fill in all fields.');
+    return;
+  }
   if (!isLogin && password !== confirmPassword) {
     setError('Make sure passwords match!')
-    return
+    return;
   }
 
 
